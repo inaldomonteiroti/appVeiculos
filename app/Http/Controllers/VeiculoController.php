@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Veiculo;
 
 class VeiculoController extends Controller
 {
@@ -34,7 +35,23 @@ class VeiculoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only
+       (['marca', 'modelo', 'ano', 'preco']);
+  if($data){
+    $veiculo = Veiculo::create($data);
+    if($veiculo){
+      return response()->json
+          (['data'=> $veiculo], 201);
+    }else{
+      return response()->json
+          (['message'=>'Erro ao criar o veículo'], 400);
+    }
+   }else{
+    return response()->json
+        (['message'=>'Dados inválidos'], 400);
+  }
+ }
+        
     }
 
     /**
